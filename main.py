@@ -20,7 +20,7 @@ G.add_edge("HU", "SE", weight=11328)
 # G.add_edge("HU", "KH", weight=12492)
 G.add_edge("SE", "KH", weight=9340)
 
-
+print("trying branch")
 print("Elwin i love u")
 pos = nx.get_node_attributes(G, 'pos')
 nx.draw(G, pos, with_labels=True)
