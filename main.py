@@ -21,7 +21,7 @@ G.add_edge("HU", "SE", weight=11328)
 G.add_edge("SE", "KH", weight=9340)
 
 
-
+print("Elwin i love u")
 pos = nx.get_node_attributes(G, 'pos')
 nx.draw(G, pos, with_labels=True)
 labels = nx.get_edge_attributes(G, 'weight')
