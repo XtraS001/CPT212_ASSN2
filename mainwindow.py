@@ -89,11 +89,13 @@ class Ui_MainWindow(object):
         self.comboBoxFrom_3.setItemText(4, _translate("MainWindow", "KH"))
 
     def pressed(self):
+        # delete the original widget
         self.gridLayout.itemAt(0).widget().deleteLater()
         node_from = self.comboBoxFrom_2.currentText()
         node_to = self.comboBoxFrom_3.currentText()
         self.widget.get_graph().add_edge(node_from, node_to, weight=100)
         self.widget = PlotCanvas(self.gridLayoutWidget)
+        # add the new widget that has new edge
         self.gridLayout.addWidget(self.widget, 0, 0)
 
 

@@ -54,9 +54,6 @@ class PlotCanvas(FigureCanvas, QtWidgets.QWidget):
         gr.add_edge("SE", "KH", weight=9340)
         return gr
 
-    def add_an_edge(self, gr, node_from, node_to, weight):
-        gr.add_edge(node_from, node_to, weight=weight)
-        #return gr
 
     def plot(self, gr):
         pos = nx.get_node_attributes(gr, 'pos')
