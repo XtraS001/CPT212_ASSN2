@@ -1,7 +1,7 @@
 
 class Graph:
     def __init__(self, Nodes, is_directed=False):
-        self.nodes = Nodes  # A,B,C,D
+        self.nodes = Nodes  # A,B,C,D An array
         self.adj_list = {}
         self.weight = {}
         self.is_directed = is_directed
@@ -31,14 +31,19 @@ class Graph:
         return deg
 
     def print_adj_list(self):
-        for node in self.nodes:
-            print("List  : ", node, "->", self.adj_list[node])
-            print("Weight: ", node, "->", self.weight[node])
+        for node in self.start_point:   # node= destination
+            # print("List  : ", node, "->", self.adj_list[node])
+            print(node, "-> [", end=" ")
+            for x, y in zip(self.adj_list[node], self.weight[node]):
+                if y != self.weight[node][-1]:
+                    print("(", x, ",", y, "),", end=" ")
+                else:
+                    print("(", x, ",", y, ")", end=" ")
+            print("]")
 
 all_edges = {
-    ("A", "B", 1), ("A", "C", 2), ("B", "D", 3), ("C", "D", 4), ("C", "E", 5), ("D", "E", 6)
+    ("A", "B", 1), ("A", "C", 2), ("B", "D", 3), ("C", "D", 4), ("C", "E", 5), ("D", "E", 6), ("E", "A", 7)
 }
-
 
 nodes = ["A", "B", "C", "D", "E"]
 graph = Graph(nodes, True)
