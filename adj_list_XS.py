@@ -1,3 +1,4 @@
+import random
 
 class Graph:
     def __init__(self,start_input, is_directed=False):
@@ -81,6 +82,14 @@ graph = Graph(nodes, True)
 
 for u, v, w in default_edges:
     graph.add_edge(u, v, w)
+
+
+def add_random_edge(other_edges):
+    a, b, c = random.choice(list(other_edges))
+    graph.super_add(a, b, c)
+
+# print(random.choice(list(other_edges)))
+
 
 # graph.del_edge("C", "B", 1)
 graph.super_del("RI", "B", 1)
