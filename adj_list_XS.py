@@ -1,3 +1,4 @@
+import random
 
 class Graph:
     def __init__(self,start_input, is_directed=False):
@@ -30,6 +31,22 @@ class Graph:
         deg = len(self.adj_list[node])
         return deg
 
+    def super_add(self, u, v, w):   # ONLY Add edge that doesnt exist
+        num = 0
+        for i in self.adj_list[u]:
+            if i != v:
+                num += 1
+
+        if num == len(self.adj_list[u]):
+            self.adj_list[u].append(v)
+            self.weight[u].append(w)
+
+    def super_del(self, u, v, w):   # ONLY Delete edge that exist
+        for i in self.adj_list[u]:
+            if i == v:
+                self.adj_list[u].remove(v)
+                self.weight[u].remove(w)
+
     def print_adj_list(self):
         for node in self.start_point:   # node= destination
             # print("List  : ", node, "->", self.adj_list[node])
@@ -40,6 +57,8 @@ class Graph:
                 else:
                     print("(", x, ",", y, ")", end=" ")
             print("]")
+
+
 
 all_edges = {
     ("A", "B", 1), ("A", "C", 2), ("B", "D", 3), ("C", "D", 4), ("C", "E", 5), ("D", "E", 6), ("E", "A", 7)
@@ -64,6 +83,14 @@ graph = Graph(nodes, True)
 for u, v, w in default_edges:
     graph.add_edge(u, v, w)
 
+
+def add_random_edge(other_edges):
+    a, b, c = random.choice(list(other_edges))
+    graph.super_add(a, b, c)
+
+# print(random.choice(list(other_edges)))
+
+
 # graph.del_edge("C", "B", 1)
-# graph.del_edge("A", "B", 1)
+graph.super_del("RI", "B", 1)
 graph.print_adj_list()
