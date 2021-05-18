@@ -1,4 +1,5 @@
 import random
+import heapq
 
 
 class Graph:
@@ -60,6 +61,7 @@ class Graph:
             print("]")
 
 
+# maybe this should be in some class?
 def add_random_edge(rand_edges):
     a, b, c = random.choice(list(rand_edges))
     graph.super_add(a, b, c)
@@ -95,6 +97,36 @@ add_random_edge(other_edges)
 # print(random.choice(list(other_edges)))
 
 
+# function 3
+def shortest_path(source, destination):
+    queue = [(0, source, [])]  # initialize a priority queue
+    visited = set()  # create hash set to store visited node
+    heapq.heapify(queue)  # create heap priority queue (this can pop the smallest value)
+    # traverse graph with BFS
+    while queue:
+        (cost, node, path) = heapq.heappop(queue)
+        # visit the node that has not been visited before
+        if node not in visited:
+            visited.add(node)
+            path = path + [node]
+            # if the node is the destination
+            if node == destination:
+                return cost, path
+            # visit neighbours
+            for c, neighbour in zip(graph.weight[node], graph.adj_list[node]):
+                if neighbour not in visited:
+                    heapq.heappush(queue, (cost+c, neighbour, path))
+    # if the destination is not reachable, add random edge until it does
+    add_random_edge(other_edges)  # this function is a global function and other edges are global dict (may need to fix)
+    return shortest_path(source, destination)
+
+
 # graph.del_edge("C", "B", 1)
-graph.super_del("RI", "B", 1)
+# graph.super_del("RI", "B", 1)
+
+# test function 3
+print(shortest_path("SE", "RI"))
+
 graph.print_adj_list()
+
+# menu
