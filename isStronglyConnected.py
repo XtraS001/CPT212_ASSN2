@@ -1,12 +1,11 @@
-# Python program to check if a given directed graph is strongly
-# connected or not
-# Done and worked
+# Is Strongly Connected Success
+# Simplified version
+import random
 
 from collections import defaultdict
 
-# ------------------My code (The Main Graph Class)--------------------------------
-class Graph:
 
+class Graph:
     def __init__(self, start_input, is_directed=False):
         self.start_point = start_input  # A,B,C,D An array
         self.adj_list = {}
@@ -25,10 +24,61 @@ class Graph:
             self.adj_list[v].append(u)
             self.weight[u].append(w)
 
-# ------------------------Storing All the edges-------------------------------------
-all_edges = {
-    ("A", "B", 1), ("A", "C", 2), ("B", "D", 3), ("C", "D", 4), ("C", "E", 5), ("D", "E", 6), ("E", "A", 7)
-}
+    def print_adj_list(self):
+        for node in self.start_point:  # node= destination
+            # print("List  : ", node, "->", self.adj_list[node])
+            print(node, "-> [", end=" ")
+            for x, y in zip(self.adj_list[node], self.weight[node]):
+                if y != self.weight[node][-1]:
+                    print("(", x, ",", y, "),", end=" ")
+                else:
+                    print("(", x, ",", y, ")", end=" ")
+            print("]")
+
+    def DFS(self, s):
+        # Initially mark all vertices as not visited
+        visited = defaultdict()
+        for i in self.start_point:
+            visited[i] = False
+
+        # Create a stack for DFS
+        stack = []
+
+        # Push the current source node.
+        stack.append(s)
+
+        print("Start from node: ", s)
+
+        while len(stack):
+            # Pop a vertex from stack and print it
+            s = stack[-1]  # The top value of the stack
+            stack.pop()
+
+            # Stack may contain same vertex twice. So
+            # we need to print the popped item only
+            # if it is not visited.
+            if not visited[s]:
+                visited[s] = True
+
+            # Get all adjacent vertices of the popped vertex s
+            # If a adjacent has not been visited, then push it
+            # to the stack.
+            for node in self.adj_list[s]:
+                if not visited[node]:
+                    stack.append(node)
+
+        for node in visited:
+            if not visited[node]:
+                return False
+            return True
+
+    def isSC(self, listY):
+        listX = listY
+        for x in listX:
+            if not self.DFS(x):
+                return False
+
+        return True
 
 default_edges = {
     ("RI", "JK", 7349), ("RI", "HU", 12733), ("JK", "KH", 8527), ("HU", "SE", 11328), ("SE", "KH", 9340)
@@ -42,84 +92,13 @@ other_edges = {
     ("KH", "RI", 1792), ("KH", "JK", 8527), ("KH", "HU", 12492), ("KH", "SE", 9340)
 }
 
-# -----------------------Adding edges into Main Graph-------------------------------
 nodes = ["RI", "SE", "JK", "HU", "KH"]
-print(nodes)
-graph1 = Graph(nodes, True)
+graph = Graph(nodes, True)
+# graph.print_adj_list()
 
 for u, v, w in default_edges:  # Default edge
-    graph1.add_edge(u, v, w)
+    graph.add_edge(u, v, w)
+# for u, v, w in other_edges:  # Default edge
+#     graph.add_edge(u, v, w)
 
-# -----------------------subGraph for function 1&2 uses---------------------------
-def subGraph(mainGraph):
-    graphC = defaultdict(list)
-
-    for i in mainGraph.start_point:
-        for j in mainGraph.adj_list[i]:
-            graphC[i].append(j)
-
-    return graphC
-
-# -----------------------Strongly Connected Checking--------------------------
-
-# A function used by isSC() to perform DFS
-def DFSUtil(graph, v, visited):
-
-    # Mark the current node as visited
-    visited[v] = True
-
-    # Recur for all the vertices adjacent to this vertex
-    for i in graph[v]:
-        if visited[i] == False:
-            DFSUtil(i, visited)
-
-# Function that returns reverse (or transpose) of this graph
-def getTranspose(graph):
-
-    g = defaultdict(list)
-
-    # Recur for all the vertices adjacent to this vertex
-    for i in graph:
-        for j in graph[i]:
-            g.addEdge(j, i)
-
-    return g
-
-# The main function that returns true if graph is strongly connected
-def isSC(graph):
-
-    # Step 1: Mark all the vertices as not visited (For first DFS)
-    visited = [False] * 5   # 5 = number of vertices
-
-    # Step 2: Do DFS traversal starting from first vertex.
-    DFSUtil(graph, 0, visited)
-
-    # If DFS traversal doesnt visit all vertices, then return false
-    if any(i == False for i in visited):
-        return False
-
-    # Step 3: Create a reversed graph
-    gr = getTranspose()
-
-    # Step 4: Mark all the vertices as not visited (For second DFS)
-    visited = [False] * 5    # 5 = number of vertices
-
-    # Step 5: Do DFS for reversed graph starting from first vertex.
-    # Staring Vertex must be same starting point of first DFS
-    gr.DFSUtil(graph, 0, visited)
-
-    # If all vertices are not visited in second DFS, then
-    # return false
-    if any(i == False for i in visited):
-        return False
-
-    return True
-
-
-graph2 = subGraph(graph1)
-print(isSC(graph2))     # True = strongly connected
-
-
-
-
-
+print(graph.isSC(nodes))
