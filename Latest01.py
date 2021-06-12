@@ -104,7 +104,6 @@ class Graph:
             return True
 
     def isSC(self):
-        # listX = listY
         for x in self.start_point:
             if not self.DFS(x):
                 return False
