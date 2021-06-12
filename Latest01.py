@@ -114,28 +114,29 @@ class Graph:
         while not self.isSC():
             self.add_random_edge(other_edge)
 
-# function 3
-def shortest_path(source, destination):
-    queue = [(0, source, [])]  # initialize a priority queue
-    visited = set()  # create hash set to store visited node
-    heapq.heapify(queue)  # create heap priority queue (this can pop the smallest value)
-    # traverse graph with BFS
-    while queue:
-        (cost, node, path) = heapq.heappop(queue)
-        # visit the node that has not been visited before
-        if node not in visited:
-            visited.add(node)
-            path = path + [node]
-            # if the node is the destination
-            if node == destination:
-                return cost, path
-            # visit neighbours
-            for c, neighbour in zip(graph.weight[node], graph.adj_list[node]):
-                if neighbour not in visited:
-                    heapq.heappush(queue, (cost+c, neighbour, path))
-    # if the destination is not reachable, add random edge until it does
-    add_random_edge(other_edges)  # this function is a global function and other edges are global dict (may need to fix)
-    return shortest_path(source, destination)
+    # function 3
+    def shortest_path(self, source, destination):
+        queue = [(0, source, [])]  # initialize a priority queue
+        visited = set()  # create hash set to store visited node
+        heapq.heapify(queue)  # create heap priority queue (this can pop the smallest value)
+        # traverse graph with BFS
+        while queue:
+            (cost, node, path) = heapq.heappop(queue)
+            # visit the node that has not been visited before
+            if node not in visited:
+                visited.add(node)
+                path = path + [node]
+                # if the node is the destination
+                if node == destination:
+                    return cost, path
+                # visit neighbours
+                for c, neighbour in zip(self.weight[node], self.adj_list[node]):
+                    if neighbour not in visited:
+                        heapq.heappush(queue, (cost + c, neighbour, path))
+        # if the destination is not reachable, add random edge until it does
+        self.add_random_edge(other_edges)
+        return self.shortest_path(source, destination)
+
 
 default_edges = {
     ("RI", "JK", 7349), ("RI", "HU", 12733), ("JK", "KH", 8527), ("HU", "SE", 11328), ("SE", "KH", 9340)
@@ -153,6 +154,9 @@ nodes = ["RI", "SE", "JK", "HU", "KH"]
 graph = Graph(nodes, True)
 for u, v, w in default_edges:
     graph.add_edge(u, v, w)
+
+graph.print_adj_list()
+print(graph.shortest_path("SE", "RI"))
 graph.print_adj_list()
 
 
