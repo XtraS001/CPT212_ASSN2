@@ -78,7 +78,7 @@ class Graph:
         # Push the current source node.
         stack.append(s)
 
-        print("Start from node: ", s)
+        # print("Start from node: ", s)
 
         while len(stack):
             # Pop a vertex from stack and print it
