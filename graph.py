@@ -293,7 +293,10 @@ def menu():
         elif choice == "5":
             print("The original graph is: ")
             graph.print_adj_list()
-            print(graph.shortest_path("SE", "RI"))
+            print("Shortest path")
+            start = input("Start point: ")
+            end = input("End point: ")
+            print(graph.shortest_path(start, end))
             print("The final graph is: ")
             graph.print_adj_list()
             print()
