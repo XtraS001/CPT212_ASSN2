@@ -155,7 +155,7 @@ graph = Graph(nodes, True)
 for u, v, w in default_edges:
     graph.add_edge(u, v, w)
 
-graph.print_adj_list()
+print("The original graph is: ", graph.print_adj_list())
 print(graph.shortest_path("SE", "RI"))
 graph.print_adj_list()
 
