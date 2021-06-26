@@ -67,7 +67,7 @@ class Graph:
         a, b, c = random.choice(list(rand_edges))
         graph.super_add(a, b, c)
         print("(", a, ",", b, ",", c, ") is randomly generated and added")
-
+##########################################Cycle##########################################
     def detectAlgo(self, num, pred, n, v):
         n += 1
         num[v] = n
@@ -78,7 +78,7 @@ class Graph:
                 pred[u] = v
                 self.detectAlgo(num, pred, n, u)
 
-            elif num[u] != 999:
+            elif num[u] != 999:  # Cycle Detected
                 pred[u] = v
                 stack2 = []
                 stack3 = []
@@ -128,7 +128,7 @@ class Graph:
         while not self.cycleDetection():
             self.add_random_edge(other_edges)
         self.print_adj_list()
-
+##########################################Cycle##########################################
 
 default_edges = {
     ("RI", "JK", 7349), ("RI", "HU", 12733), ("JK", "KH", 8527), ("HU", "SE", 11328), ("SE", "KH", 9340)

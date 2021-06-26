@@ -66,45 +66,45 @@ class Graph:
         graph.super_add(a, b, c)
         print("(", a, ",", b, ",", c, ") is randomly generated and added")
 
+    # function 1: detecting strongly connected component
     def DFS(self, s):
         # Initially mark all vertices as not visited
         visited = defaultdict()
-        for i in self.start_point:  #start_point = all nodes
+        for i in self.start_point:  # start_point = all vertices
             visited[i] = False
 
         # Create a stack for DFS
         stack = []
 
-        # Push the current source node.
+        # Push the current source vertex.
         stack.append(s)
 
-        print("Start from node: ", s)
+        # print("Start from vertex: ", s)
 
         while len(stack):
             # Pop a vertex from stack and print it
-            s = stack[-1]  # The top value of the stack
+            t = stack[-1]  # The top value of the stack
             stack.pop()
 
             # Stack may contain same vertex twice. So
             # we need to print the popped item only
             # if it is not visited.
-            if not visited[s]:
-                visited[s] = True
+            if not visited[t]:
+                visited[t] = True
 
             # Get all adjacent vertices of the popped vertex s
             # If a adjacent has not been visited, then push it
             # to the stack.
-            for node in self.adj_list[s]:
-                if not visited[node]:
-                    stack.append(node)
+            for vertex in self.adj_list[t]:
+                if not visited[vertex]:
+                    stack.append(vertex)
 
-        for node in visited:
-            if not visited[node]:
+        for vertex in visited:
+            if not visited[vertex]:
                 return False
             return True
 
     def isSC(self):
-        # listX = listY
         for x in self.start_point:
             if not self.DFS(x):
                 return False
