@@ -261,12 +261,14 @@ def menu():
                           Please enter your choice: """)
 
         if choice == "3":
+            print("The original graph is: ")
             graph.print_adj_list()
             if graph.isSC():
-                print("Graph is strongly connected")
+                print("Graph is strongly connected\n")
             else:
-                print("Graph is not strongly connected")
+                print("Graph is not strongly connected\n")
                 graph.gen_SC(other_edges)
+                print("\nThe final graph is: ")
                 graph.print_adj_list()
                 print("The graph is now strongly connected")
             print()
